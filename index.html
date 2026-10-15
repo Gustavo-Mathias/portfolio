@@ -1,0 +1,1281 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f1820">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://gustavo-mathias.pages.dev/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Gustavo Mathias">
+<meta property="og:title" content="Gustavo Mathias · Desenvolvedor Full Stack">
+<meta property="og:description" content="Interfaces caprichadas na frente, APIs sólidas por trás. React, Angular e .NET.">
+<meta property="og:url" content="https://gustavo-mathias.pages.dev/">
+<meta property="og:image" content="https://gustavo-mathias.pages.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Gustavo Mathias · Desenvolvedor Full Stack</title>
+<meta name="description" content="Portfólio de Gustavo Mathias, desenvolvedor full stack: front-end em React e Angular, back-end em .NET.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: vitrine de produto. Hero em duas colunas (tese + retrato com órbita 3D das tecnologias sobre uma rede de nós),
+   faixa de stack em movimento, projetos de front-end como peças grandes (print que rola dentro da moldura),
+   sistemas full stack mais densos, contato. */
+:root {
+  --bg: #f3f5f6;
+  --surface: #ffffff;
+  --ink: #142231;
+  --muted: #5a6876;
+  --line: #d7dee4;
+  --accent: #0b6e8a;
+  --accent-soft: #e1eff3;
+  --signal: #b8640a;
+  --signal-soft: #f8ecdc;
+  --chrome: #e4e9ed;
+  --wa: #1f9d55;
+  --wa-ink: #ffffff;
+  --glow: rgb(11 110 138 / .18);
+  --f-display: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.5rem;
+  --step-3: 2.125rem;
+  --step-4: clamp(2.4rem, 5.6vw, 4.4rem);
+  --gutter: clamp(16px, 4vw, 40px);
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1820; --surface: #16222c; --ink: #e4ebf0; --muted: #93a3b1; --line: #263642;
+    --accent: #4fb6d3; --accent-soft: #15323d; --signal: #e8a04f; --signal-soft: #3a2a17; --chrome: #1d2b36;
+    --wa: #25b862; --wa-ink: #06210f; --glow: rgb(79 182 211 / .16);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1820; --surface: #16222c; --ink: #e4ebf0; --muted: #93a3b1; --line: #263642;
+  --accent: #4fb6d3; --accent-soft: #15323d; --signal: #e8a04f; --signal-soft: #3a2a17; --chrome: #1d2b36;
+  --wa: #25b862; --wa-ink: #06210f; --glow: rgb(79 182 211 / .16);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: var(--step-0); line-height: 1.6;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3, h4 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.015em; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; }
+code { font-family: var(--f-mono); font-size: 0.8125rem; background: var(--chrome); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+::selection { background: var(--accent); color: var(--bg); }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding-inline: var(--gutter); }
+
+/* ---------- custom cursor (fine pointers only) ---------- */
+.cur-dot, .cur-ring { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 100; display: none; }
+.has-cursor .cur-dot, .has-cursor .cur-ring { display: block; }
+.cur-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--accent); }
+.cur-ring {
+  width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%;
+  border: 1.5px solid var(--accent); display: none; place-items: center;
+  transition: width .25s var(--ease), height .25s var(--ease), margin .25s var(--ease), background .25s, border-color .25s;
+}
+.has-cursor .cur-ring { display: grid; }
+.cur-ring span { font: 500 0.6875rem/1 var(--f-mono); color: var(--bg); opacity: 0; transition: opacity .2s; white-space: nowrap; }
+.cur-ring.big { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: var(--accent); border-color: var(--accent); }
+.cur-ring.big span { opacity: 1; }
+.cur-ring.link { width: 52px; height: 52px; margin: -26px 0 0 -26px; background: var(--glow); }
+.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+}
+.progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: linear-gradient(90deg, var(--accent), var(--signal)); transform-origin: 0 50%; transform: scaleX(0); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.nav .mark { font-family: var(--f-mono); font-size: var(--step--1); color: var(--ink); text-decoration: none; font-weight: 500; }
+.nav .mark span { color: var(--accent); }
+.nav .right { display: flex; align-items: center; gap: 24px; }
+.nav ul { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+.nav ul a { font-size: var(--step--1); color: var(--muted); text-decoration: none; font-weight: 500; position: relative; }
+.nav ul a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1.5px; background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform .3s var(--ease); }
+.nav ul a:hover { color: var(--ink); }
+.nav ul a:hover::after, .nav ul a.on::after { transform: scaleX(1); transform-origin: left; }
+.nav ul a.on { color: var(--ink); }
+@media (max-width: 760px) { .nav ul { display: none; } }
+
+.lang { position: relative; display: flex; border: 1px solid var(--line); border-radius: 8px; padding: 3px; background: var(--surface); }
+.lang .pill { position: absolute; top: 3px; bottom: 3px; left: 3px; border-radius: 5px; background: var(--ink); transition: transform .35s var(--ease), width .35s var(--ease); z-index: 0; }
+.lang button {
+  position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 6px;
+  font: 500 0.6875rem/1 var(--f-mono); letter-spacing: 0.04em; padding: 6px 9px;
+  background: transparent; color: var(--muted); border: 0; border-radius: 5px; cursor: pointer; transition: color .25s;
+}
+.lang button[aria-pressed="true"] { color: var(--bg); }
+.lang svg { width: 18px; height: 12px; border-radius: 2px; flex: none; box-shadow: 0 0 0 1px rgb(0 0 0 / .12); }
+@media (max-width: 420px) { .lang button span { display: none; } .lang button { padding: 6px 7px; } }
+
+/* ---------- hero ---------- */
+.hero-wrap { position: relative; isolation: isolate; }
+#net { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; }
+.hero-wrap::after { content: ""; position: absolute; inset: auto 0 0 0; height: 120px; background: linear-gradient(transparent, var(--bg)); z-index: -1; pointer-events: none; }
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px);
+  align-items: center; padding-block: clamp(40px, 7vw, 88px) clamp(40px, 6vw, 72px);
+}
+.hero-text { display: grid; gap: 24px; min-width: 0; }
+.eyebrow { font-family: var(--f-mono); font-size: var(--step--1); color: var(--accent); letter-spacing: 0.04em; }
+.typed { display: inline-flex; align-items: center; gap: 2px; min-height: 1.6em; }
+.typed .caret { width: 8px; height: 1.1em; background: var(--accent); display: inline-block; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.hero h1 { font-size: var(--step-4); font-weight: 800; line-height: 1.04; }
+.hero h1 em { font-style: normal; color: var(--accent); white-space: nowrap; position: relative; }
+.hero h1 em::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0.02em; height: 0.12em; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--signal)); transform-origin: left; transform: scaleX(1);
+}
+.w { display: inline-block; }
+.lede { font-size: var(--step-1); color: var(--muted); max-width: 58ch; }
+.lede strong { color: var(--ink); font-weight: 600; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 500 var(--step--1)/1 var(--f-mono);
+  padding: 13px 17px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); text-decoration: none; cursor: pointer;
+  transition: border-color .2s, background .2s, box-shadow .25s; will-change: transform;
+}
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.wa { background: var(--wa); color: var(--wa-ink); border-color: var(--wa); box-shadow: 0 10px 30px -12px var(--wa); }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.btn:hover { border-color: var(--accent); box-shadow: 0 10px 28px -14px var(--accent); }
+.btn.wa:hover { border-color: var(--wa); box-shadow: 0 14px 34px -10px var(--wa); }
+.btn.sm { padding: 9px 12px; font-size: 0.75rem; }
+
+/* portrait + orbit */
+.portrait { position: relative; justify-self: center; width: min(100%, 400px); aspect-ratio: 4 / 5; perspective: 1000px; }
+.card3d {
+  position: absolute; inset: 0; border-radius: 22px; overflow: hidden; background: #0b0d10;
+  transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .5s var(--ease);
+  box-shadow: 0 40px 80px -40px rgb(0 0 0 / .55), 0 0 0 1px var(--line);
+}
+.card3d.live { transition: transform .08s linear; }
+.card3d img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06) translate(calc(var(--ry, 0deg) * -0.6), calc(var(--rx, 0deg) * 0.6)); transition: transform .5s var(--ease); }
+.card3d .glare { position: absolute; inset: 0; background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgb(255 255 255 / .22), transparent 45%); mix-blend-mode: soft-light; pointer-events: none; }
+.card3d .scan { position: absolute; inset: 0; background: linear-gradient(transparent 0 46%, rgb(79 182 211 / .35) 50%, transparent 54%); background-size: 100% 220%; animation: scan 5.5s var(--ease) infinite; mix-blend-mode: screen; pointer-events: none; opacity: .55; }
+@keyframes scan { 0% { background-position: 0 -120%; } 60%, 100% { background-position: 0 220%; } }
+.badge-live {
+  position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 3; transform: translateZ(40px);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  padding: 10px 12px; border-radius: 12px; background: rgb(12 18 24 / .62); backdrop-filter: blur(10px);
+  color: #e9eef2; font: 500 0.75rem/1.3 var(--f-mono); border: 1px solid rgb(255 255 255 / .12);
+}
+.badge-live .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d27a; box-shadow: 0 0 0 0 rgb(52 210 122 / .6); animation: ping 2s infinite; flex: none; }
+.badge-live .l { display: inline-flex; align-items: center; gap: 8px; }
+.badge-live .r { color: #9fb2c0; }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 rgb(52 210 122 / .6); } 80%, 100% { box-shadow: 0 0 0 10px rgb(52 210 122 / 0); } }
+.orbit { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+.chip {
+  position: absolute; left: 50%; top: 50%; pointer-events: auto;
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font: 500 0.75rem/1 var(--f-mono); padding: 8px 11px; border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent); color: var(--ink);
+  border: 1px solid var(--line); backdrop-filter: blur(6px);
+  box-shadow: 0 10px 24px -14px rgb(0 0 0 / .45);
+  will-change: transform, opacity;
+}
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--accent)); }
+.chip.back { z-index: -1; }
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .portrait { width: min(78%, 340px); margin-top: 12px; order: -1; }
+}
+
+/* ---------- marquee ---------- */
+.marquee { border-block: 1px solid var(--line); overflow: hidden; padding-block: 16px; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee .track { display: flex; width: max-content; animation: slide 38s linear infinite; }
+.marquee:hover .track { animation-play-state: paused; }
+.marquee span { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.25rem, 2.6vw, 1.9rem); color: var(--muted); padding-inline: 22px; display: inline-flex; align-items: center; gap: 44px; transition: color .2s; }
+.marquee span::after { content: "✦"; font-size: 0.6em; color: var(--accent); }
+.marquee span:hover { color: var(--ink); }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* ---------- figures ---------- */
+.figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.figure { padding: 26px 20px 26px 0; display: grid; gap: 6px; align-content: start; }
+.figure + .figure { padding-left: 20px; border-left: 1px solid var(--line); }
+.figure b { font-family: var(--f-display); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.figure b small { font-size: var(--step-1); color: var(--muted); font-weight: 500; }
+.figure > span { font-size: var(--step--1); color: var(--muted); line-height: 1.45; }
+@media (max-width: 760px) {
+  .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .figure:nth-child(3) { padding-left: 0; border-left: 0; }
+  .figure:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+
+/* ---------- reveal ---------- */
+.rv { transition: opacity .8s var(--ease), transform .8s var(--ease), filter .8s var(--ease); transition-delay: var(--d, 0s); }
+.rv.pre { opacity: 0; transform: translateY(36px); filter: blur(6px); }
+
+/* ---------- sections ---------- */
+section.block { padding-block: clamp(72px, 10vw, 120px) 0; scroll-margin-top: 40px; }
+.sec-head { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 8px 24px; margin-bottom: 48px; align-items: baseline; }
+.sec-head .label { font-family: var(--f-mono); font-size: var(--step--1); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.sec-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 800; }
+.sec-head p { grid-column: 2; color: var(--muted); max-width: 64ch; }
+@media (max-width: 760px) { .sec-head { grid-template-columns: 1fr; } .sec-head p { grid-column: 1; } }
+
+/* ---------- showcase ---------- */
+.show { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.show + .show { margin-top: clamp(64px, 9vw, 104px); }
+.show.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); }
+.show.flip .stage { order: 2; }
+@media (max-width: 860px) { .show, .show.flip { grid-template-columns: 1fr; } .show.flip .stage { order: 0; } }
+
+.stage { perspective: 1400px; min-width: 0; }
+.frame {
+  position: relative; display: block; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface);
+  text-decoration: none; color: inherit;
+  box-shadow: 0 1px 2px rgb(20 34 49 / .06), 0 30px 60px -30px rgb(20 34 49 / .45);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d;
+  transition: transform .6s var(--ease), box-shadow .4s;
+}
+.frame.live { transition: transform .08s linear, box-shadow .4s; }
+a.frame:hover { box-shadow: 0 1px 2px rgb(20 34 49 / .06), 0 44px 80px -30px rgb(20 34 49 / .55); }
+.frame .glare { position: absolute; inset: 0; background: radial-gradient(500px circle at var(--gx, 50%) var(--gy, 50%), rgb(255 255 255 / .16), transparent 45%); opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 2; }
+.frame:hover .glare { opacity: 1; }
+.bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: var(--chrome); border-bottom: 1px solid var(--line); }
+.bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); flex: none; }
+.bar i:nth-child(1) { background: #ec6a5e; } .bar i:nth-child(2) { background: #f4bf4f; } .bar i:nth-child(3) { background: #61c554; }
+.bar span { margin-left: 10px; font-family: var(--f-mono); font-size: 0.6875rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.screen { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #111; }
+.screen img { display: block; width: 100%; height: auto; transform: translateY(0); transition: transform var(--dur, 6s) cubic-bezier(.45,.05,.35,1); }
+.frame:hover .screen img, .frame.auto .screen img { transform: translateY(var(--shift, 0px)); }
+.scroll-hint { position: absolute; right: 10px; bottom: 10px; z-index: 3; font: 500 0.6875rem/1 var(--f-mono); padding: 6px 9px; border-radius: 999px; background: rgb(12 18 24 / .7); color: #e9eef2; backdrop-filter: blur(6px); transition: opacity .3s; }
+.frame:hover .scroll-hint { opacity: 0; }
+
+.tree { padding: 18px 20px 20px; font-family: var(--f-mono); font-size: 0.78rem; line-height: 1.75; color: var(--muted); overflow-x: auto; white-space: nowrap; min-height: 260px; }
+.tree b { color: var(--ink); font-weight: 500; }
+.tree .k { color: var(--accent); }
+.tree .c { color: var(--signal); }
+.tree .ln { display: block; opacity: 1; }
+.tree.typing .ln { animation: line-in .4s var(--ease) both; animation-delay: calc(var(--i) * 90ms); }
+@keyframes line-in { from { opacity: 0; transform: translateX(-8px); } }
+
+.info { display: grid; gap: 16px; min-width: 0; }
+.info .kind { font-family: var(--f-mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; }
+.info h3 { font-size: clamp(1.5rem, 2.6vw, 1.9rem); font-weight: 800; line-height: 1.12; }
+.info > p { color: var(--muted); }
+.did { list-style: none; display: grid; gap: 8px; }
+.did li { position: relative; padding-left: 20px; font-size: 0.9375rem; }
+.did li::before { content: ""; position: absolute; left: 2px; top: 0.6em; width: 6px; height: 6px; border-radius: 1px; background: var(--accent); transform: rotate(45deg); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+.tags li { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); border: 1px solid var(--line); padding: 3px 8px; border-radius: 4px; transition: color .2s, border-color .2s, transform .2s; }
+.tags li:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.private { font-family: var(--f-mono); font-size: 0.75rem; color: var(--signal); background: var(--signal-soft); padding: 6px 10px; border-radius: 4px; justify-self: start; }
+
+.more { margin-top: clamp(64px, 9vw, 96px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; }
+.more a { display: grid; gap: 4px; align-content: start; padding-block: 16px; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); min-width: 0; position: relative; }
+.more a::before { content: ""; position: absolute; left: 0; top: -1px; height: 1px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease); }
+.more a:hover::before { transform: scaleX(1); }
+.more a:hover h4 { color: var(--accent); }
+.more h4 { font-size: var(--step-0); font-weight: 700; transition: color .2s; }
+.more span { font-size: 0.875rem; color: var(--muted); }
+.more em { font-style: normal; font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); }
+@media (max-width: 860px) { .more { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .more { grid-template-columns: 1fr; } }
+
+/* ---------- systems ---------- */
+.spot { position: relative; }
+.spot::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(520px circle at var(--mx, -999px) var(--my, -999px), var(--glow), transparent 40%); transition: opacity .3s; }
+.case { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: clamp(20px, 3.5vw, 36px); display: grid; gap: 24px; }
+.case > * { position: relative; }
+.case + .case { margin-top: 20px; }
+.case-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: start; }
+.case-top h3 { font-size: var(--step-2); font-weight: 800; }
+.case-top .summary { grid-column: 1 / -1; color: var(--muted); max-width: 70ch; }
+.status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 0.75rem; padding: 5px 10px; border-radius: 999px; background: var(--signal-soft); color: var(--signal); white-space: nowrap; font-weight: 500; }
+.status.live { background: var(--accent-soft); color: var(--accent); }
+.status.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: blink 1.6s steps(1) infinite; }
+.contribs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 36px; }
+.contrib { padding-block: 14px; border-top: 1px solid var(--line); display: grid; gap: 4px; align-content: start; min-width: 0; }
+.contrib h4 { font-family: var(--f-body); font-size: var(--step-0); font-weight: 600; letter-spacing: 0; }
+.contrib p { font-size: 0.9375rem; color: var(--muted); }
+@media (max-width: 760px) { .contribs { grid-template-columns: 1fr; } }
+
+.topo { border: 1px dashed var(--line); border-radius: 10px; padding: 20px; overflow-x: auto; }
+.topo-cap { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); margin-bottom: 14px; letter-spacing: 0.04em; text-transform: uppercase; }
+.topo-grid { display: grid; grid-template-columns: 1fr 40px 1fr 40px 1.3fr; align-items: center; min-width: 660px; }
+.topo-col { display: grid; gap: 10px; }
+.node { font-family: var(--f-mono); font-size: 0.75rem; line-height: 1.35; border: 1px solid var(--line); background: var(--bg); padding: 8px 10px; border-radius: 6px; transition: transform .25s var(--ease), box-shadow .25s; }
+.node:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -12px var(--accent); }
+.node b { display: block; font-weight: 500; color: var(--ink); font-size: 0.8125rem; }
+.node span { color: var(--muted); }
+.node.new { border-color: var(--accent); background: var(--accent-soft); }
+.node.legacy { border-style: dashed; }
+.arrow { height: 1px; background: var(--muted); position: relative; margin-inline: 4px; }
+.arrow::after { content: ""; position: absolute; right: -1px; top: -4px; border: 4px solid transparent; border-left: 6px solid var(--muted); border-right: 0; }
+.arrow i { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: packet 1.8s linear infinite; animation-delay: var(--pd, 0s); }
+@keyframes packet { from { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } to { left: calc(100% - 7px); opacity: 0; } }
+.svc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.topo-legend { display: flex; gap: 18px; margin-top: 14px; font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); flex-wrap: wrap; }
+.topo-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--line); background: var(--bg); }
+.topo-legend i.new { border-color: var(--accent); background: var(--accent-soft); }
+.topo-legend i.legacy { border-style: dashed; }
+
+/* ---------- skills ---------- */
+.skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.skill { padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); display: grid; gap: 10px; align-content: start; }
+.skill > * { position: relative; }
+.skill h3 { font-family: var(--f-mono); font-size: var(--step--1); font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.skill p { font-size: 0.9375rem; }
+.skill.lead { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.skill.lead h3 { color: var(--accent); }
+@media (max-width: 860px) { .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .skills { grid-template-columns: 1fr; } }
+.creds { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 0.875rem; color: var(--muted); }
+.creds b { color: var(--ink); font-weight: 600; }
+
+/* ---------- contact ---------- */
+.contact { margin-top: clamp(72px, 10vw, 120px); padding: clamp(28px, 5vw, 56px); border-radius: 20px; background: var(--ink); color: var(--bg); display: grid; gap: 22px; scroll-margin-top: 40px; overflow: hidden; position: relative; }
+.contact::after { content: ""; position: absolute; width: 520px; height: 520px; right: -160px; top: -200px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent), transparent 65%); filter: blur(10px); animation: float 9s ease-in-out infinite alternate; pointer-events: none; }
+@keyframes float { to { transform: translate(-80px, 60px) scale(1.1); } }
+.contact > * { position: relative; z-index: 1; }
+.contact .eyebrow { color: color-mix(in srgb, var(--bg) 70%, var(--accent)); }
+.contact h2 { font-size: clamp(1.9rem, 4.2vw, 3.2rem); max-width: 20ch; font-weight: 800; line-height: 1.06; }
+.contact .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.contact .btn { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 30%, transparent); }
+.contact .btn.wa { background: var(--wa); color: var(--wa-ink); border-color: var(--wa); }
+.contact .btn.light { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+.contact .lines { display: flex; flex-wrap: wrap; gap: 8px 28px; font-family: var(--f-mono); font-size: var(--step--1); color: color-mix(in srgb, var(--bg) 65%, transparent); }
+.contact .lines span { user-select: all; color: var(--bg); }
+footer { padding-block: 28px 100px; font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); }
+
+/* floating WhatsApp */
+.wa-float {
+  position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 40;
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.wa-float .bubble {
+  font: 500 0.75rem/1.3 var(--f-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  padding: 8px 12px; border-radius: 12px 12px 4px 12px; box-shadow: 0 10px 24px -12px rgb(0 0 0 / .35);
+  opacity: 0; transform: translateX(10px); transition: opacity .3s, transform .3s var(--ease); pointer-events: none; white-space: nowrap;
+}
+.wa-float:hover .bubble, .wa-float.hello .bubble { opacity: 1; transform: none; }
+.wa-float .ico { position: relative; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--wa); color: var(--wa-ink); box-shadow: 0 10px 26px -6px rgb(0 0 0 / .4); transition: transform .25s var(--ease); }
+.wa-float .ico::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--wa); animation: ring 2.4s ease-out infinite; }
+@keyframes ring { from { transform: scale(1); opacity: .7; } to { transform: scale(1.7); opacity: 0; } }
+.wa-float:hover .ico { transform: scale(1.08) rotate(-8deg); }
+.wa-float svg { width: 28px; height: 28px; }
+
+/* hero intro */
+@media (prefers-reduced-motion: no-preference) {
+  .intro .w { animation: word .9s var(--ease) both; animation-delay: calc(var(--i) * 55ms + 120ms); }
+  @keyframes word { from { transform: translateY(0.5em) rotateX(-60deg); opacity: .001; filter: blur(6px); } }
+  .intro h1 em::after { animation: underline 1s var(--ease) .9s both; }
+  @keyframes underline { from { transform: scaleX(0); } }
+  .intro .fade { animation: fade .8s var(--ease) both; animation-delay: var(--d, .5s); }
+  @keyframes fade { from { opacity: .001; transform: translateY(14px); } }
+  .intro .portrait { animation: pop 1.1s var(--ease) .2s both; }
+  @keyframes pop { from { opacity: .001; transform: translateY(30px) scale(.94); filter: blur(8px); } }
+  main.swap { animation: swap .45s var(--ease); }
+  @keyframes swap { 0% { opacity: 1; } 35% { opacity: .15; filter: blur(3px); } 100% { opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee .track, .card3d .scan, .arrow i, .contact::after, .wa-float .ico::before, .badge-live .dot { animation: none; }
+  .rv, .rv.pre { opacity: 1; transform: none; filter: none; transition: none; }
+}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.23 8.23 0 0 1-4.19-1.150l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.820 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.22-8.23 8.22Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.840-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></symbol>
+  <symbol id="f-br" viewBox="0 0 20 14"><rect width="20" height="14" fill="#009B3A"/><path d="M10 1.6 18.4 7 10 12.4 1.6 7Z" fill="#FEDF00"/><circle cx="10" cy="7" r="3.1" fill="#002776"/><path d="M7.1 6.3c1.9-.5 4-.2 5.8.9" stroke="#fff" stroke-width=".6" fill="none"/></symbol>
+  <symbol id="f-pt" viewBox="0 0 20 14"><rect width="20" height="14" fill="#FF0000"/><rect width="8" height="14" fill="#006600"/><circle cx="8" cy="7" r="2.9" fill="#FFCC00"/><circle cx="8" cy="7" r="1.8" fill="#FF0000"/><rect x="7.1" y="5.8" width="1.8" height="2.3" rx=".3" fill="#fff"/></symbol>
+  <symbol id="f-gb" viewBox="0 0 60 30"><clipPath id="gbt"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" clip-path="url(#gbt)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></symbol>
+</svg>
+
+<div class="cur-ring" aria-hidden="true"><span id="cur-label">abrir ↗</span></div>
+<div class="cur-dot" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Seções">
+  <div class="wrap">
+    <a class="mark" href="#topo"><span>~/</span>gustavo-mathias</a>
+    <div class="right">
+      <ul>
+        <li><a href="#front">Front-end</a></li>
+        <li><a href="#sistemas" data-i18n="nav.systems">Sistemas</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#contato" data-i18n="nav.contact">Contato</a></li>
+      </ul>
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <span class="pill" aria-hidden="true"></span>
+        <button type="button" data-lang="pt-BR" aria-pressed="true" title="Português (Brasil)"><svg aria-hidden="true"><use href="#f-br"/></svg><span>PT-BR</span></button>
+        <button type="button" data-lang="pt-PT" aria-pressed="false" title="Português (Portugal)"><svg aria-hidden="true"><use href="#f-pt"/></svg><span>PT-PT</span></button>
+        <button type="button" data-lang="en" aria-pressed="false" title="English"><svg aria-hidden="true"><use href="#f-gb"/></svg><span>EN</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</nav>
+
+<div class="hero-wrap" id="topo">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <header class="hero wrap intro" id="hero">
+    <div class="hero-text">
+      <p class="eyebrow fade" style="--d:.05s"><span class="typed"><span id="typed">Desenvolvedor Full Stack</span><span class="caret"></span></span></p>
+      <h1 id="hero-title" data-i18n="hero.title">Interfaces caprichadas na frente, <em>APIs sólidas</em> por trás.</h1>
+      <p class="lede fade" style="--d:.6s" data-i18n="hero.lede">Sou o <strong>Gustavo Mathias</strong>. Desenho e construo produtos web de ponta a ponta: landing pages que convertem, painéis administrativos que as pessoas usam o dia inteiro e as APIs em .NET que sustentam tudo isso em produção. Também cuido do deploy, do pipeline e da infraestrutura.</p>
+      <div class="cta fade" style="--d:.75s">
+        <a class="btn wa mag" href="https://wa.me/5511975426685" target="_blank" rel="noopener" data-wa><svg aria-hidden="true"><use href="#i-wa"/></svg><span data-i18n="cta.wa">Chamar no WhatsApp</span></a>
+        <a class="btn primary mag" href="#front" data-i18n="cta.projects">Ver projetos ↓</a>
+        <a class="btn mag" href="https://github.com/Gustavo-Mathias" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn mag" href="https://www.linkedin.com/in/gustavomathiasdev/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="portrait" id="portrait">
+      <div class="card3d" id="card3d">
+        <img src="img/gustavo.webp" alt="Foto de Gustavo Mathias" width="720" height="900">
+        <div class="scan" aria-hidden="true"></div>
+        <div class="glare" aria-hidden="true"></div>
+        <div class="badge-live"><span class="l"><span class="dot"></span><span data-i18n="hero.badge">Aberto a oportunidades</span></span><span class="r">São Paulo · BR</span></div>
+      </div>
+      <div class="orbit" id="orbit" aria-hidden="true">
+        <span class="chip" style="--c:#61dafb"><i></i>React</span>
+        <span class="chip" style="--c:#dd0031"><i></i>Angular</span>
+        <span class="chip" style="--c:#512bd4"><i></i>.NET</span>
+        <span class="chip" style="--c:#3178c6"><i></i>TypeScript</span>
+        <span class="chip" style="--c:#2496ed"><i></i>Docker</span>
+        <span class="chip" style="--c:#336791"><i></i>PostgreSQL</span>
+        <span class="chip" style="--c:#888"><i></i>Next.js</span>
+        <span class="chip" style="--c:#9b4f96"><i></i>C#</span>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>React</span><span>Angular</span><span>TypeScript</span><span>Next.js</span><span>.NET 10</span><span>C#</span><span>PostgreSQL</span><span>Docker</span><span>AWS</span><span>GCP</span><span>Tailwind</span><span>Ext JS</span>
+    <span>React</span><span>Angular</span><span>TypeScript</span><span>Next.js</span><span>.NET 10</span><span>C#</span><span>PostgreSQL</span><span>Docker</span><span>AWS</span><span>GCP</span><span>Tailwind</span><span>Ext JS</span>
+  </div>
+</div>
+
+<main class="wrap" id="main">
+  <div class="figures" role="list">
+    <div class="figure rv" role="listitem"><b><span data-count="3">3</span></b><span data-i18n="fig.1">frameworks de front em produção: React, Angular e Ext JS</span></div>
+    <div class="figure rv" style="--d:.08s" role="listitem"><b><span data-count="5">5</span>k+<small data-i18n="fig.day">/dia</small></b><span data-i18n="fig.2">requisições nas APIs REST que arquitetei</span></div>
+    <div class="figure rv" style="--d:.16s" role="listitem"><b>20→<span data-count="75">75</span><small>%</small></b><span data-i18n="fig.3">cobertura de testes com TDD em módulos críticos</span></div>
+    <div class="figure rv" style="--d:.24s" role="listitem"><b>0 <small>downtime</small></b><span data-i18n="fig.4">migrando schemas de produção com mais de 100 mil registros</span></div>
+  </div>
+
+  <!-- ================= FRONT-END ================= -->
+  <section class="block" id="front">
+    <div class="sec-head rv">
+      <span class="label">Front-end</span>
+      <h2 data-i18n="front.title" data-scramble>Sites e interfaces que entreguei</h2>
+      <p data-i18n="front.sub">Passe o mouse nos prints para rolar o site inteiro, e clique para abrir. Todos são responsivos, com deploy automatizado e código aberto no GitHub.</p>
+    </div>
+
+    <article class="show rv">
+      <div class="stage">
+        <a class="frame tilt" href="https://gustavo-mathias.github.io/SIG_landing_page/" target="_blank" rel="noopener" data-cursor aria-label="SIG Hospital Veterinário">
+          <div class="bar"><i></i><i></i><i></i><span>gustavo-mathias.github.io/SIG_landing_page</span></div>
+          <div class="screen"><img src="img/sig_full.webp" alt="SIG Hospital Veterinário — página completa" width="960" height="5275" loading="lazy"></div>
+          <span class="scroll-hint" data-i18n="hint">passe o mouse ↓</span>
+          <div class="glare"></div>
+        </a>
+      </div>
+      <div class="info">
+        <span class="kind" data-i18n="sig.kind">Site institucional · cliente real</span>
+        <h3>SIG Hospital Veterinário</h3>
+        <p data-i18n="sig.desc">Site de um hospital veterinário 24h em Manaus, com portais separados para tutores e para veterinários parceiros.</p>
+        <ul class="did">
+          <li data-i18n="sig.1">Design system próprio com tokens de cor exportados em CSS, JS e Tailwind</li>
+          <li data-i18n="sig.2">Páginas de área do cliente, área do veterinário e consulta de resultado de exame</li>
+          <li data-i18n="sig.3">Animações de entrada por scroll e atalho fixo para WhatsApp e emergência</li>
+          <li data-i18n="sig.4">HTML, CSS e JavaScript puros, sem framework e com carregamento leve</li>
+        </ul>
+        <ul class="tags"><li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>Design tokens</li><li>GitHub Pages</li></ul>
+        <div class="links">
+          <a class="btn sm primary mag" href="https://gustavo-mathias.github.io/SIG_landing_page/" target="_blank" rel="noopener" data-i18n="btn.site">Ver site ↗</a>
+          <a class="btn sm mag" href="https://github.com/Gustavo-Mathias/SIG_landing_page" target="_blank" rel="noopener" data-i18n="btn.code">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="show flip rv">
+      <div class="stage">
+        <a class="frame tilt" href="https://gustavo-mathias.github.io/Valtrix-Systems---Site-Institucional/" target="_blank" rel="noopener" data-cursor aria-label="Valtrix Systems">
+          <div class="bar"><i></i><i></i><i></i><span>gustavo-mathias.github.io/Valtrix-Systems</span></div>
+          <div class="screen"><img src="img/valtrix_full.webp" alt="Valtrix Systems — página completa" width="960" height="1437" loading="lazy"></div>
+          <span class="scroll-hint" data-i18n="hint">passe o mouse ↓</span>
+          <div class="glare"></div>
+        </a>
+      </div>
+      <div class="info">
+        <span class="kind" data-i18n="val.kind">Site institucional · React</span>
+        <h3>Valtrix Systems</h3>
+        <p data-i18n="val.desc">Site de uma consultoria de tecnologia, pensado para gerar pedidos de diagnóstico.</p>
+        <ul class="did">
+          <li data-i18n="val.1">SPA em React + Vite com seções de proposta de valor, pilares e roadmap geradas a partir de dados</li>
+          <li data-i18n="val.2">Identidade escura com gradientes e marca d'água, mantendo contraste legível</li>
+          <li data-i18n="val.3">Build e publicação automáticos com GitHub Actions a cada push na <code>main</code></li>
+        </ul>
+        <ul class="tags"><li>React</li><li>Vite</li><li>CSS</li><li>GitHub Actions</li><li>GitHub Pages</li></ul>
+        <div class="links">
+          <a class="btn sm primary mag" href="https://gustavo-mathias.github.io/Valtrix-Systems---Site-Institucional/" target="_blank" rel="noopener" data-i18n="btn.site">Ver site ↗</a>
+          <a class="btn sm mag" href="https://github.com/Gustavo-Mathias/Valtrix-Systems---Site-Institucional" target="_blank" rel="noopener" data-i18n="btn.code">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="show rv">
+      <div class="stage">
+        <a class="frame tilt" href="https://gustavo-mathias.github.io/casamento-front/" target="_blank" rel="noopener" data-cursor aria-label="Site do casamento">
+          <div class="bar"><i></i><i></i><i></i><span>gustavo-mathias.github.io/casamento-front</span></div>
+          <div class="screen"><img src="img/casamento_full.webp" alt="Site do casamento — página completa" width="960" height="3507" loading="lazy"></div>
+          <span class="scroll-hint" data-i18n="hint">passe o mouse ↓</span>
+          <div class="glare"></div>
+        </a>
+      </div>
+      <div class="info">
+        <span class="kind" data-i18n="wed.kind">Site pessoal · React + TypeScript</span>
+        <h3 data-i18n="wed.title">Site do meu casamento</h3>
+        <p data-i18n="wed.desc">Site do casamento, com foco em tipografia, fotos e movimento suave.</p>
+        <ul class="did">
+          <li data-i18n="wed.1">Hooks próprios <code>useParallax</code> e <code>useReveal</code> com IntersectionObserver</li>
+          <li data-i18n="wed.2">Contagem regressiva ao vivo, galeria de fotos e seção de história do casal</li>
+          <li data-i18n="wed.3">CSS Modules por página e deploy contínuo no GitHub Pages</li>
+        </ul>
+        <ul class="tags"><li>React</li><li>TypeScript</li><li>Vite</li><li>CSS Modules</li><li>GitHub Actions</li></ul>
+        <div class="links">
+          <a class="btn sm primary mag" href="https://gustavo-mathias.github.io/casamento-front/" target="_blank" rel="noopener" data-i18n="btn.site">Ver site ↗</a>
+          <a class="btn sm mag" href="https://github.com/Gustavo-Mathias/casamento-front" target="_blank" rel="noopener" data-i18n="btn.code">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="show flip rv">
+      <div class="stage">
+        <div class="frame tilt" aria-hidden="true">
+          <div class="bar"><i></i><i></i><i></i><span>ticket-system-front/src/app</span></div>
+          <div class="tree">
+<span class="ln" style="--i:0"><b>core/</b></span>
+<span class="ln" style="--i:1">&nbsp;&nbsp;guards/ <span class="k">auth.guard</span> · <span class="k">admin.guard</span></span>
+<span class="ln" style="--i:2">&nbsp;&nbsp;interceptors/ <span class="k">auth.interceptor</span> <span class="c">// JWT</span></span>
+<span class="ln" style="--i:3">&nbsp;&nbsp;services/ ticket · user · toast · validation-count</span>
+<span class="ln" style="--i:4"><b>features/</b></span>
+<span class="ln" style="--i:5">&nbsp;&nbsp;dashboard/ <span class="c">// signals + search</span></span>
+<span class="ln" style="--i:6">&nbsp;&nbsp;tickets/ticket-board · ticket-form</span>
+<span class="ln" style="--i:7">&nbsp;&nbsp;validation/ · finalizados/ · audit/</span>
+<span class="ln" style="--i:8">&nbsp;&nbsp;admin/users/ <span class="c">// admin only</span></span>
+<span class="ln" style="--i:9"><b>shared/components/</b></span>
+<span class="ln" style="--i:10">&nbsp;&nbsp;navbar · ticket-card · toast</span>
+          </div>
+          <div class="glare"></div>
+        </div>
+      </div>
+      <div class="info">
+        <span class="kind" data-i18n="tk.kind">Aplicação web · Angular + .NET</span>
+        <h3>Ticket System</h3>
+        <p data-i18n="tk.desc">Sistema de chamados com quadro por cliente e projeto, fluxo de validação, histórico de auditoria e gestão de usuários por perfil.</p>
+        <ul class="did">
+          <li data-i18n="tk.1">Angular com componentes standalone, <code>signal()</code> e <code>inject()</code></li>
+          <li data-i18n="tk.2">Rotas protegidas por guards de autenticação e de admin, mais interceptor de JWT</li>
+          <li data-i18n="tk.3">Quadro que agrupa tickets por cliente e projeto, com busca instantânea</li>
+          <li data-i18n="tk.4">Back-end em .NET com Clean Architecture, JWT, Supabase e Docker</li>
+        </ul>
+        <ul class="tags"><li>Angular</li><li>TypeScript</li><li>Signals</li><li>SCSS</li><li>.NET</li><li>Supabase</li><li>Docker</li></ul>
+        <div class="links">
+          <a class="btn sm primary mag" href="https://github.com/Gustavo-Mathias/ticket-system-front" target="_blank" rel="noopener" data-i18n="btn.front">Código do front</a>
+          <a class="btn sm mag" href="https://github.com/Gustavo-Mathias/ticket-system-back" target="_blank" rel="noopener" data-i18n="btn.back">Código do back</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="show rv">
+      <div class="stage">
+        <div class="frame tilt" aria-hidden="true">
+          <div class="bar"><i></i><i></i><i></i><span>smartlog-react/src/features</span></div>
+          <div class="tree">
+<span class="ln" style="--i:0"><b>users/</b>UserDetailPage.tsx <span class="c">// 16 tabs</span></span>
+<span class="ln" style="--i:1">&nbsp;&nbsp;Dados gerais · Acesso · GHE · Tamanhos</span>
+<span class="ln" style="--i:2">&nbsp;&nbsp;Exceções · Biometria · Foto/Face</span>
+<span class="ln" style="--i:3">&nbsp;&nbsp;Férias · Movimentações · Termos …</span>
+<span class="ln" style="--i:4"><b>products/</b>ProductDetailPage.tsx <span class="c">// 8 tabs</span></span>
+<span class="ln" style="--i:5">&nbsp;&nbsp;Variações <span class="c">(SKU matrix)</span> · Kit</span>
+<span class="ln" style="--i:6">&nbsp;&nbsp;GHE · Imagens · Estoque</span>
+<span class="ln" style="--i:7"><b>vite.config.ts</b></span>
+<span class="ln" style="--i:8">&nbsp;&nbsp;<span class="k">/api/collaborators</span> → usuarios</span>
+<span class="ln" style="--i:9">&nbsp;&nbsp;<span class="k">/api/ghes</span> → estoque</span>
+<span class="ln" style="--i:10">&nbsp;&nbsp;<span class="k">/api/*</span> → legacy API</span>
+          </div>
+          <div class="glare"></div>
+        </div>
+      </div>
+      <div class="info">
+        <span class="kind" data-i18n="sm.kind">Backoffice · trabalho atual</span>
+        <h3 data-i18n="sm.title">Novo backoffice Smartlog em React</h3>
+        <p data-i18n="sm.desc">Reescrita do painel de gestão de EPI, antes em Ext JS, usado por empresas para controlar a entrega de equipamentos de proteção em máquinas automáticas.</p>
+        <ul class="did">
+          <li data-i18n="sm.1">Cadastro de colaborador em 16 abas: biometria, foto, tamanhos, GHE e férias</li>
+          <li data-i18n="sm.2">Cadastro de produto com matriz de variações por SKU e composição de kits</li>
+          <li data-i18n="sm.3">React Query para cache e sincronização de dados, Ant Design como base visual</li>
+          <li data-i18n="sm.4">Proxy por prefixo de rota para conversar com o legado e os novos microsserviços ao mesmo tempo</li>
+        </ul>
+        <ul class="tags"><li>React</li><li>TypeScript</li><li>Vite</li><li>Ant Design</li><li>React Query</li><li>dayjs</li></ul>
+        <span class="private" data-i18n="sm.private">Código privado da empresa</span>
+      </div>
+    </article>
+
+    <div class="more rv">
+      <a href="https://github.com/Gustavo-Mathias/Challenge-Assistence-Front" target="_blank" rel="noopener"><em>Angular Material · .NET</em><h4 data-i18n="more.1t">Gestão de assistência veicular ↗</h4><span data-i18n="more.1d">Front em Angular Material e API .NET com repositórios e Docker</span></a>
+      <a href="https://github.com/Gustavo-Mathias/ToList-Challenge" target="_blank" rel="noopener"><em>React · TypeScript</em><h4>ToList Challenge ↗</h4><span data-i18n="more.2d">Lista de tarefas em React com Vite e Phosphor Icons</span></a>
+      <a href="https://github.com/Gustavo-Mathias/Barber-Api" target="_blank" rel="noopener"><em>.NET · Clean Architecture</em><h4>Barber API ↗</h4><span data-i18n="more.3d">API de barbearia em camadas: Domain, Application, Infrastructure e Api</span></a>
+    </div>
+  </section>
+
+  <!-- ================= SISTEMAS ================= -->
+  <section class="block" id="sistemas">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="sys.label">Sistemas</span>
+      <h2 data-i18n="sys.title" data-scramble>Do banco ao deploy</h2>
+      <p data-i18n="sys.sub">Produtos em que trabalhei além da interface: arquitetura, regras de negócio, segurança e infraestrutura.</p>
+    </div>
+
+    <article class="case spot rv">
+      <div class="case-top">
+        <h3 data-i18n="s1.title">Smartlog: gestão de EPI com vending machines</h3>
+        <span class="status live" data-i18n="status.live">em produção</span>
+        <p class="summary" data-i18n="s1.sum">Plataforma que controla a entrega de EPI em máquinas automáticas e lockers. Lidero a migração do legado para React e microsserviços .NET 10, sem tirar o sistema do ar.</p>
+      </div>
+      <div class="topo">
+        <p class="topo-cap" data-i18n="topo.cap">Migração incremental: o legado continua no ar enquanto cada domínio vira um microsserviço</p>
+        <div class="topo-grid">
+          <div class="topo-col">
+            <div class="node new"><b>Backoffice React</b><span>Vite · TS · Ant Design</span></div>
+            <div class="node legacy"><b>Backoffice Ext JS</b><span data-i18n="topo.legacyMods">módulos legados</span></div>
+            <div class="node"><b>Vending machine</b><span data-i18n="topo.machine">app local do equipamento</span></div>
+          </div>
+          <div class="arrow" aria-hidden="true"><i></i><i style="--pd:.9s"></i></div>
+          <div class="topo-col">
+            <div class="node"><b data-i18n="topo.routing">Roteamento por prefixo</b><span>/api/collaborators → usuarios<br>/api/ghes → estoque<br>/api/* → legacy</span></div>
+            <div class="node new"><b>inosync</b><span data-i18n="topo.sync">sync do equipamento</span></div>
+          </div>
+          <div class="arrow" aria-hidden="true"><i style="--pd:.45s"></i><i style="--pd:1.35s"></i></div>
+          <div class="topo-col">
+            <div class="svc-grid">
+              <div class="node new"><b>usuarios</b><span>.NET 10</span></div>
+              <div class="node new"><b>operacao</b><span>.NET 10</span></div>
+              <div class="node new"><b>cotas</b><span>.NET 10</span></div>
+              <div class="node new"><b>estoque</b><span>.NET 10</span></div>
+              <div class="node new"><b>relatorios</b><span>.NET 10</span></div>
+              <div class="node new"><b>reports</b><span>.NET 10</span></div>
+            </div>
+            <div class="node legacy" style="margin-top:8px"><b data-i18n="topo.legacyApi">API legada</b><span data-i18n="topo.untouched">.NET 8 · intocada durante a migração</span></div>
+          </div>
+        </div>
+        <div class="topo-legend"><span><i class="new"></i><span data-i18n="topo.mine">construído por mim</span></span><span><i class="legacy"></i><span data-i18n="topo.legacy">legado</span></span></div>
+      </div>
+      <div class="contribs">
+        <div class="contrib"><h4 data-i18n="s1.c1t">Sincronização das máquinas fora do legado</h4><p data-i18n="s1.c1d">Microsserviço 100% compatível com o contrato existente, sem atualizar nada nos equipamentos. Também fechei uma brecha de isolamento entre clientes.</p></div>
+        <div class="contrib"><h4 data-i18n="s1.c2t">Retorno Garantido</h4><p data-i18n="s1.c2d">Fluxo de descarte obrigatório em lockers, do kiosk ao back-end, com bloqueio validado na API e relatório exportável em CSV, PDF e XLS.</p></div>
+        <div class="contrib"><h4 data-i18n="s1.c3t">Subgrupos de cotas</h4><p data-i18n="s1.c3d">Acabei com falsos atrasos de EPI em tamanhos diferentes (P/M/G) agrupando variações, resolvido com uma CTE no SQL e uma nova seção no formulário.</p></div>
+        <div class="contrib"><h4 data-i18n="s1.c4t">Segurança</h4><p data-i18n="s1.c4d">Captcha Cloudflare Turnstile no login, segredos no AWS Secrets Manager e imagens de biometria servidas por proxy assinado a partir de um S3 privado.</p></div>
+      </div>
+      <ul class="tags"><li>.NET 8 / 10</li><li>MediatR · CQRS</li><li>Dapper · EF Core</li><li>PostgreSQL</li><li>Ext JS</li><li>AWS</li><li>Docker</li></ul>
+    </article>
+
+    <article class="case spot rv">
+      <div class="case-top">
+        <h3 data-i18n="s2.title">Orbian: plataforma jurídica com IA</h3>
+        <span class="status live" data-i18n="status.live">em produção</span>
+        <p class="summary" data-i18n="s2.sum">SaaS para escritórios de advocacia com pipeline de casos, documentos e geração de peças processuais assistida por LLM.</p>
+      </div>
+      <div class="contribs">
+        <div class="contrib"><h4 data-i18n="s2.c1t">IA aplicada na API .NET</h4><p data-i18n="s2.c1d">Geração de peças, copiloto de edição e análise de documentos, sempre com o contexto do caso e tratamento de falha amigável.</p></div>
+        <div class="contrib"><h4 data-i18n="s2.c2t">Migração para Google Cloud</h4><p data-i18n="s2.c2d">Produção consolidada de três provedores em Cloud Run + Cloud SQL. HML sem custo fixo em Supabase + Vercel e CI/CD trunk-based no GitHub Actions.</p></div>
+      </div>
+      <ul class="tags"><li>.NET</li><li>React</li><li>PostgreSQL</li><li>LLM</li><li>GCP Cloud Run</li><li>Vercel</li><li>GitHub Actions</li></ul>
+    </article>
+
+    <article class="case spot rv">
+      <div class="case-top">
+        <h3 data-i18n="s3.title">PromoPilot: curadoria de ofertas para afiliados</h3>
+        <span class="status">MVP</span>
+        <p class="summary" data-i18n="s3.sum">SaaS em que afiliados cadastram ofertas, geram o texto da divulgação e agendam publicações em canais do Telegram.</p>
+      </div>
+      <div class="contribs">
+        <div class="contrib"><h4 data-i18n="s3.c1t">Next.js 16 com Server Actions</h4><p data-i18n="s3.c1d">Formulários com <code>useActionState</code> do React 19, validação Zod e interface com Tailwind v4 e shadcn/ui.</p></div>
+        <div class="contrib"><h4 data-i18n="s3.c2t">Supabase com segurança em camadas</h4><p data-i18n="s3.c2d">Row Level Security, filtro explícito por usuário em toda mutação e job de agendamento protegido por segredo.</p></div>
+      </div>
+      <ul class="tags"><li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Tailwind v4</li><li>shadcn/ui</li><li>Supabase</li><li>Telegram Bot API</li></ul>
+    </article>
+  </section>
+
+  <!-- ================= STACK ================= -->
+  <section class="block" id="stack">
+    <div class="sec-head rv">
+      <span class="label">Stack</span>
+      <h2 data-i18n="stack.title" data-scramble>Ferramentas do dia a dia</h2>
+    </div>
+    <div class="skills">
+      <div class="skill lead spot rv"><h3>Front-end</h3><p>React, Angular, Next.js, TypeScript, JavaScript ES6+, HTML5, CSS3, SCSS, CSS Modules, Tailwind, Ant Design, Angular Material, React Query, Ext JS</p></div>
+      <div class="skill lead spot rv" style="--d:.06s"><h3 data-i18n="sk.ux">UI &amp; experiência</h3><p data-i18n="sk.uxd">Layout responsivo, design tokens, animações de scroll, acessibilidade, componentização e reaproveitamento entre projetos</p></div>
+      <div class="skill spot rv" style="--d:.12s"><h3>Back-end</h3><p>C#, .NET 8 / 10, ASP.NET Core, EF Core, Dapper, MediatR, REST APIs, JWT</p></div>
+      <div class="skill spot rv"><h3 data-i18n="sk.data">Dados</h3><p data-i18n="sk.datad">PostgreSQL, SQL Server, MySQL, Supabase, otimização de queries</p></div>
+      <div class="skill spot rv" style="--d:.06s"><h3>Cloud &amp; DevOps</h3><p>Docker, Kubernetes, GitHub Actions, Azure DevOps, AWS, GCP Cloud Run, Vercel, GitHub Pages</p></div>
+      <div class="skill spot rv" style="--d:.12s"><h3 data-i18n="sk.arch">Arquitetura</h3><p data-i18n="sk.archd">Clean Architecture, DDD, microsserviços, CQRS, TDD, SOLID, observabilidade com OpenTelemetry e Grafana</p></div>
+    </div>
+    <div class="creds rv">
+      <span data-i18n="cr.1"><b>Análise e Desenvolvimento de Sistemas</b> · FMU</span>
+      <span><b>DevOps Pro</b> · Docker, Kubernetes, CI/CD</span>
+      <span><b>Docker &amp; Compose</b> · Rocketseat</span>
+      <span data-i18n="cr.4"><b>Desenvolvimento Front-End</b> · IOS</span>
+      <span data-i18n="cr.5"><b>Inglês</b> intermediário avançado</span>
+    </div>
+  </section>
+
+  <!-- ================= CONTATO ================= -->
+  <section class="contact rv" id="contato">
+    <span class="eyebrow" data-i18n="ct.label">Contato</span>
+    <h2 data-i18n="ct.title">Precisa de alguém que entregue a tela e a API? Vamos conversar.</h2>
+    <div class="row">
+      <a class="btn wa mag" href="https://wa.me/5511975426685" target="_blank" rel="noopener" data-wa><svg aria-hidden="true"><use href="#i-wa"/></svg><span data-i18n="cta.wa">Chamar no WhatsApp</span></a>
+      <button class="btn light mag" type="button" data-email="gumathias1304@gmail.com" data-i18n="ct.copy">Copiar e-mail</button>
+      <a class="btn mag" href="https://github.com/Gustavo-Mathias" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn mag" href="https://www.linkedin.com/in/gustavomathiasdev/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="lines">
+      <div>e-mail <span id="email-text">gumathias1304@gmail.com</span></div>
+      <div>WhatsApp <span>+55 11 97542-6685</span></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">Gustavo Mathias · São Paulo, SP · Brasil</footer>
+
+<a class="wa-float" id="wa-float" href="https://wa.me/5511975426685" target="_blank" rel="noopener" aria-label="WhatsApp" data-wa>
+  <span class="bubble" data-i18n="wa.bubble">Vamos conversar? 👋</span>
+  <span class="ico"><svg aria-hidden="true"><use href="#i-wa"/></svg></span>
+</a>
+
+<script>
+var I18N = {
+  "pt-PT": {
+    "nav.systems": "Sistemas", "nav.contact": "Contacto",
+    "hero.title": "Interfaces cuidadas à frente, <em>APIs sólidas</em> por trás.",
+    "hero.lede": "Sou o <strong>Gustavo Mathias</strong>. Desenho e desenvolvo produtos web de ponta a ponta: landing pages que convertem, painéis de gestão que as equipas usam o dia inteiro e as APIs em .NET que sustentam tudo isto em produção. Também trato do deploy, da pipeline e da infraestrutura.",
+    "hero.badge": "Disponível para oportunidades",
+    "cta.wa": "Falar por WhatsApp", "cta.projects": "Ver projetos ↓",
+    "fig.1": "frameworks de front-end em produção: React, Angular e Ext JS", "fig.day": "/dia",
+    "fig.2": "pedidos diários nas APIs REST que arquitetei", "fig.3": "cobertura de testes com TDD em módulos críticos",
+    "fig.4": "ao migrar schemas de produção com mais de 100 mil registos",
+    "front.title": "Sites e interfaces que entreguei",
+    "front.sub": "Passe o rato sobre as imagens para percorrer o site completo e clique para o abrir. Todos são responsivos, com deploy automatizado e código aberto no GitHub.",
+    "hint": "passe o rato ↓",
+    "sig.kind": "Site institucional · cliente real",
+    "sig.desc": "Site de um hospital veterinário 24h em Manaus, com portais distintos para tutores e para veterinários parceiros.",
+    "sig.1": "Design system próprio com tokens de cor exportados em CSS, JS e Tailwind",
+    "sig.2": "Páginas de área de cliente, área do veterinário e consulta de resultados de análises",
+    "sig.3": "Animações de entrada ao fazer scroll e atalho fixo para WhatsApp e urgência",
+    "sig.4": "HTML, CSS e JavaScript puros, sem framework e com carregamento leve",
+    "btn.site": "Ver site ↗", "btn.code": "Código",
+    "val.kind": "Site institucional · React",
+    "val.desc": "Site de uma consultora de tecnologia, pensado para gerar pedidos de diagnóstico.",
+    "val.1": "SPA em React + Vite com secções de proposta de valor, pilares e roadmap geradas a partir de dados",
+    "val.2": "Identidade escura com gradientes e marca de água, mantendo um contraste legível",
+    "val.3": "Build e publicação automáticos com GitHub Actions a cada push na <code>main</code>",
+    "wed.kind": "Site pessoal · React + TypeScript", "wed.title": "Site do meu casamento",
+    "wed.desc": "Site do casamento, com foco em tipografia, fotografias e movimento suave.",
+    "wed.1": "Hooks próprios <code>useParallax</code> e <code>useReveal</code> com IntersectionObserver",
+    "wed.2": "Contagem decrescente em tempo real, galeria de fotografias e secção com a história do casal",
+    "wed.3": "CSS Modules por página e deploy contínuo no GitHub Pages",
+    "tk.kind": "Aplicação web · Angular + .NET",
+    "tk.desc": "Sistema de pedidos de suporte com quadro por cliente e projeto, fluxo de validação, histórico de auditoria e gestão de utilizadores por perfil.",
+    "tk.1": "Angular com componentes standalone, <code>signal()</code> e <code>inject()</code>",
+    "tk.2": "Rotas protegidas por guards de autenticação e de administrador, com interceptor de JWT",
+    "tk.3": "Quadro que agrupa os pedidos por cliente e projeto, com pesquisa instantânea",
+    "tk.4": "Back-end em .NET com Clean Architecture, JWT, Supabase e Docker",
+    "btn.front": "Código do front-end", "btn.back": "Código do back-end",
+    "sm.kind": "Backoffice · trabalho atual", "sm.title": "Novo backoffice Smartlog em React",
+    "sm.desc": "Reescrita do painel de gestão de EPI, antes em Ext JS, usado por empresas para controlar a entrega de equipamentos de proteção em máquinas automáticas.",
+    "sm.1": "Registo de colaborador em 16 separadores: biometria, fotografia, tamanhos, GHE e férias",
+    "sm.2": "Registo de produto com matriz de variações por SKU e composição de kits",
+    "sm.3": "React Query para cache e sincronização de dados, Ant Design como base visual",
+    "sm.4": "Proxy por prefixo de rota para comunicar com o sistema legado e com os novos microsserviços em simultâneo",
+    "sm.private": "Código privado da empresa",
+    "more.1t": "Gestão de assistência automóvel ↗", "more.1d": "Front-end em Angular Material e API .NET com repositórios e Docker",
+    "more.2d": "Lista de tarefas em React com Vite e Phosphor Icons", "more.3d": "API para barbearia em camadas: Domain, Application, Infrastructure e Api",
+    "sys.label": "Sistemas", "sys.title": "Da base de dados ao deploy",
+    "sys.sub": "Produtos em que trabalhei para lá da interface: arquitetura, regras de negócio, segurança e infraestrutura.",
+    "s1.title": "Smartlog: gestão de EPI com máquinas de venda automática", "status.live": "em produção",
+    "s1.sum": "Plataforma que controla a entrega de EPI em máquinas automáticas e cacifos. Lidero a migração do sistema legado para React e microsserviços .NET 10, sem o tirar do ar.",
+    "topo.cap": "Migração incremental: o sistema legado continua ativo enquanto cada domínio passa a microsserviço",
+    "topo.legacyMods": "módulos legados", "topo.machine": "aplicação local do equipamento", "topo.routing": "Encaminhamento por prefixo",
+    "topo.sync": "sincronização do equipamento", "topo.legacyApi": "API legada", "topo.untouched": ".NET 8 · intacta durante a migração",
+    "topo.mine": "desenvolvido por mim", "topo.legacy": "legado",
+    "s1.c1t": "Sincronização das máquinas fora do sistema legado",
+    "s1.c1d": "Microsserviço 100% compatível com o contrato existente, sem atualizar nada nos equipamentos. Também corrigi uma falha de isolamento entre clientes.",
+    "s1.c2t": "Retorno Garantido",
+    "s1.c2d": "Fluxo de descarte obrigatório em cacifos, do quiosque ao back-end, com bloqueio validado na API e relatório exportável em CSV, PDF e XLS.",
+    "s1.c3t": "Subgrupos de quotas",
+    "s1.c3d": "Eliminei falsos atrasos de EPI em tamanhos diferentes (P/M/G) agrupando variações, com uma CTE em SQL e uma nova secção no formulário.",
+    "s1.c4t": "Segurança",
+    "s1.c4d": "Captcha Cloudflare Turnstile no login, segredos no AWS Secrets Manager e imagens biométricas servidas por proxy assinado a partir de um S3 privado.",
+    "s2.title": "Orbian: plataforma jurídica com IA",
+    "s2.sum": "SaaS para escritórios de advogados com pipeline de processos, documentos e geração de peças processuais assistida por LLM.",
+    "s2.c1t": "IA aplicada na API .NET",
+    "s2.c1d": "Geração de peças, copiloto de edição e análise de documentos, sempre com o contexto do processo e tratamento de erros amigável.",
+    "s2.c2t": "Migração para a Google Cloud",
+    "s2.c2d": "Produção consolidada de três fornecedores em Cloud Run + Cloud SQL. Ambiente de testes sem custo fixo em Supabase + Vercel e CI/CD trunk-based no GitHub Actions.",
+    "s3.title": "PromoPilot: curadoria de promoções para afiliados",
+    "s3.sum": "SaaS em que os afiliados registam promoções, geram o texto de divulgação e agendam publicações em canais do Telegram.",
+    "s3.c1t": "Next.js 16 com Server Actions",
+    "s3.c1d": "Formulários com <code>useActionState</code> do React 19, validação Zod e interface com Tailwind v4 e shadcn/ui.",
+    "s3.c2t": "Supabase com segurança em camadas",
+    "s3.c2d": "Row Level Security, filtro explícito por utilizador em cada alteração e tarefa de agendamento protegida por segredo.",
+    "stack.title": "Ferramentas do dia a dia", "sk.ux": "UI &amp; experiência",
+    "sk.uxd": "Layout responsivo, design tokens, animações de scroll, acessibilidade, componentização e reutilização entre projetos",
+    "sk.data": "Dados", "sk.datad": "PostgreSQL, SQL Server, MySQL, Supabase, otimização de queries",
+    "sk.arch": "Arquitetura", "sk.archd": "Clean Architecture, DDD, microsserviços, CQRS, TDD, SOLID, observabilidade com OpenTelemetry e Grafana",
+    "cr.1": "<b>Licenciatura em Análise e Desenvolvimento de Sistemas</b> · FMU", "cr.4": "<b>Desenvolvimento Front-End</b> · IOS",
+    "cr.5": "<b>Inglês</b> intermédio-avançado",
+    "ct.label": "Contacto", "ct.title": "Precisa de alguém que entregue o ecrã e a API? Vamos falar.", "ct.copy": "Copiar e-mail",
+    "wa.bubble": "Vamos falar? 👋",
+    "copied": "Copiado ✓", "selected": "Selecionado", "cursor": "abrir ↗",
+    "roles": ["Programador Full Stack", "Especialista em Front-end", "Engenheiro .NET", "React · Angular · .NET"],
+    "wa.msg": "Olá, Gustavo! Vi o seu portfólio e gostaria de falar consigo sobre uma oportunidade."
+  },
+  "en": {
+    "nav.systems": "Systems", "nav.contact": "Contact",
+    "hero.title": "Polished interfaces up front, <em>solid APIs</em> behind them.",
+    "hero.lede": "I'm <strong>Gustavo Mathias</strong>. I design and build web products end to end: landing pages that convert, admin dashboards people use all day, and the .NET APIs that keep it all running in production. I also handle deployment, CI/CD pipelines and infrastructure.",
+    "hero.badge": "Open to opportunities",
+    "cta.wa": "Message on WhatsApp", "cta.projects": "See projects ↓",
+    "fig.1": "front-end frameworks in production: React, Angular and Ext JS", "fig.day": "/day",
+    "fig.2": "requests served by the REST APIs I designed", "fig.3": "test coverage with TDD on critical modules",
+    "fig.4": "while migrating production schemas with 100k+ rows",
+    "front.title": "Websites and interfaces I've shipped",
+    "front.sub": "Hover a screenshot to scroll through the whole site, and click to open it. All of them are responsive, deployed automatically and open source on GitHub.",
+    "hint": "hover to scroll ↓",
+    "sig.kind": "Business website · real client",
+    "sig.desc": "Website for a 24/7 veterinary hospital in Manaus, Brazil, with separate portals for pet owners and partner vets.",
+    "sig.1": "Custom design system with color tokens exported to CSS, JS and Tailwind",
+    "sig.2": "Client area, vet area and lab results lookup pages",
+    "sig.3": "Scroll-triggered reveal animations and a sticky WhatsApp and emergency shortcut",
+    "sig.4": "Plain HTML, CSS and JavaScript: no framework, fast to load",
+    "btn.site": "Live site ↗", "btn.code": "Code",
+    "val.kind": "Business website · React",
+    "val.desc": "Website for a tech consultancy, built to generate assessment requests.",
+    "val.1": "React + Vite SPA with value proposition, pillars and roadmap sections rendered from data",
+    "val.2": "Dark identity with gradients and a watermark, keeping text contrast readable",
+    "val.3": "Automatic build and publish with GitHub Actions on every push to <code>main</code>",
+    "wed.kind": "Personal site · React + TypeScript", "wed.title": "My wedding website",
+    "wed.desc": "Our wedding website, focused on typography, photos and subtle motion.",
+    "wed.1": "Custom <code>useParallax</code> and <code>useReveal</code> hooks built on IntersectionObserver",
+    "wed.2": "Live countdown, photo gallery and our story section",
+    "wed.3": "Per-page CSS Modules and continuous deployment to GitHub Pages",
+    "tk.kind": "Web app · Angular + .NET",
+    "tk.desc": "Ticketing system with a board grouped by client and project, a review flow, audit history and role-based user management.",
+    "tk.1": "Angular with standalone components, <code>signal()</code> and <code>inject()</code>",
+    "tk.2": "Routes protected by auth and admin guards, plus a JWT interceptor",
+    "tk.3": "Board that groups tickets by client and project, with instant search",
+    "tk.4": ".NET back end with Clean Architecture, JWT, Supabase and Docker",
+    "btn.front": "Front-end code", "btn.back": "Back-end code",
+    "sm.kind": "Admin app · current job", "sm.title": "New Smartlog admin app in React",
+    "sm.desc": "Rewrite of a PPE management dashboard, previously in Ext JS, that companies use to control the handout of safety equipment from vending machines.",
+    "sm.1": "16-tab employee profile: biometrics, photo, sizes, exposure groups and time off",
+    "sm.2": "Product editor with a SKU variation matrix and kit composition",
+    "sm.3": "React Query for caching and data sync, Ant Design as the UI foundation",
+    "sm.4": "Route-prefix proxy so the app talks to the legacy API and the new microservices side by side",
+    "sm.private": "Private company code",
+    "more.1t": "Roadside assistance management ↗", "more.1d": "Angular Material front end and a .NET API with repositories and Docker",
+    "more.2d": "To-do app in React with Vite and Phosphor Icons", "more.3d": "Layered barbershop API: Domain, Application, Infrastructure and Api",
+    "sys.label": "Systems", "sys.title": "From database to deployment",
+    "sys.sub": "Products where my work went beyond the interface: architecture, business rules, security and infrastructure.",
+    "s1.title": "Smartlog: PPE management with vending machines", "status.live": "in production",
+    "s1.sum": "Platform that controls the handout of personal protective equipment from vending machines and lockers. I lead the migration from the legacy system to React and .NET 10 microservices with zero downtime.",
+    "topo.cap": "Incremental migration: the legacy system stays live while each domain moves to a microservice",
+    "topo.legacyMods": "legacy modules", "topo.machine": "on-device app", "topo.routing": "Prefix-based routing",
+    "topo.sync": "device sync", "topo.legacyApi": "Legacy API", "topo.untouched": ".NET 8 · untouched during migration",
+    "topo.mine": "built by me", "topo.legacy": "legacy",
+    "s1.c1t": "Machine sync moved out of the legacy system",
+    "s1.c1d": "A microservice that is 100% wire-compatible with the existing contract, with no changes to the devices. I also closed a tenant isolation gap along the way.",
+    "s1.c2t": "Guaranteed Return",
+    "s1.c2d": "Mandatory discard flow for lockers, from kiosk to back end, enforced by the API and backed by a report exportable to CSV, PDF and XLS.",
+    "s1.c3t": "Quota subgroups",
+    "s1.c3d": "Removed false overdue alerts for PPE in different sizes (S/M/L) by grouping variations, using a SQL CTE and a new form section.",
+    "s1.c4t": "Security",
+    "s1.c4d": "Cloudflare Turnstile captcha on login, secrets in AWS Secrets Manager, and biometric images served through a signed proxy from a private S3 bucket.",
+    "s2.title": "Orbian: AI-powered legal platform",
+    "s2.sum": "SaaS for law firms with a case pipeline, document management and LLM-assisted drafting of legal filings.",
+    "s2.c1t": "Applied AI in the .NET API",
+    "s2.c1d": "Filing generation, an editing copilot and document analysis, always grounded in the case context and with graceful error handling.",
+    "s2.c2t": "Migration to Google Cloud",
+    "s2.c2d": "Production consolidated from three providers onto Cloud Run + Cloud SQL. A zero-fixed-cost staging environment on Supabase + Vercel and trunk-based CI/CD with GitHub Actions.",
+    "s3.title": "PromoPilot: deal curation for affiliates",
+    "s3.sum": "SaaS where affiliate marketers add deals, generate promo copy and schedule posts to Telegram channels.",
+    "s3.c1t": "Next.js 16 with Server Actions",
+    "s3.c1d": "Forms built on React 19 <code>useActionState</code>, Zod validation and a UI made with Tailwind v4 and shadcn/ui.",
+    "s3.c2t": "Layered security on Supabase",
+    "s3.c2d": "Row Level Security, explicit per-user filtering on every write, and a secret-protected scheduling job.",
+    "stack.title": "Everyday tools", "sk.ux": "UI &amp; experience",
+    "sk.uxd": "Responsive layout, design tokens, scroll animations, accessibility, componentization and reuse across projects",
+    "sk.data": "Data", "sk.datad": "PostgreSQL, SQL Server, MySQL, Supabase, query optimization",
+    "sk.arch": "Architecture", "sk.archd": "Clean Architecture, DDD, microservices, CQRS, TDD, SOLID, observability with OpenTelemetry and Grafana",
+    "cr.1": "<b>Associate degree in Systems Analysis and Development</b> · FMU", "cr.4": "<b>Front-End Development</b> · IOS",
+    "cr.5": "<b>English</b> upper-intermediate",
+    "ct.label": "Contact", "ct.title": "Need someone who can ship both the screen and the API? Let's talk.", "ct.copy": "Copy email",
+    "wa.bubble": "Let's talk? 👋",
+    "copied": "Copied ✓", "selected": "Selected", "cursor": "open ↗",
+    "roles": ["Full Stack Developer", "Front-end Specialist", ".NET Engineer", "React · Angular · .NET"],
+    "wa.msg": "Hi Gustavo! I saw your portfolio and would like to talk about an opportunity."
+  }
+};
+var BASE = {
+  copied: "Copiado ✓", selected: "Selecionado", cursor: "abrir ↗",
+  roles: ["Desenvolvedor Full Stack", "Especialista em Front-end", "Engenheiro .NET", "React · Angular · .NET"],
+  "wa.msg": "Olá, Gustavo! Vi seu portfólio e gostaria de conversar sobre uma oportunidade."
+};
+var WA = "https://wa.me/5511975426685";
+var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-i18n]"));
+var original = new Map(nodes.map(function (n) { return [n, n.innerHTML]; }));
+var current = "pt-BR";
+function t(key) { return (I18N[current] && I18N[current][key] != null) ? I18N[current][key] : BASE[key]; }
+
+/* ---------- split hero title into words ---------- */
+function splitWords(el) {
+  var i = 0;
+  (function walk(node) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+      if (c.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          var s = document.createElement("span"); s.className = "w"; s.style.setProperty("--i", i++); s.textContent = part; frag.appendChild(s);
+        });
+        c.parentNode.replaceChild(frag, c);
+      } else if (c.nodeType === 1) walk(c);
+    });
+  })(el);
+}
+var heroTitle = document.getElementById("hero-title");
+function replayHero() {
+  splitWords(heroTitle);
+  var hero = document.getElementById("hero");
+  hero.classList.remove("intro"); void hero.offsetWidth; hero.classList.add("intro");
+}
+
+/* ---------- language ---------- */
+var pill = document.querySelector(".lang .pill");
+function movePill() {
+  var on = document.querySelector('[data-lang][aria-pressed="true"]');
+  if (!on || !pill) return;
+  pill.style.width = on.offsetWidth + "px";
+  pill.style.transform = "translateX(" + (on.offsetLeft - 3) + "px)";
+}
+function setLang(lang, animate) {
+  if (lang !== "en" && lang !== "pt-PT") lang = "pt-BR";
+  current = lang;
+  nodes.forEach(function (n) {
+    var dict = I18N[lang];
+    var val = dict && dict[n.getAttribute("data-i18n")];
+    n.innerHTML = val != null ? val : original.get(n);
+  });
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-lang]").forEach(function (b) {
+    b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
+  });
+  var href = WA + "?text=" + encodeURIComponent(t("wa.msg"));
+  document.querySelectorAll("[data-wa]").forEach(function (a) { a.href = href; });
+  var cl = document.getElementById("cur-label"); if (cl) cl.textContent = t("cursor");
+  movePill();
+  replayHero();
+  roleIndex = 0; if (typer) typer.restart();
+  if (animate && !reduced) { var m = document.getElementById("main"); m.classList.remove("swap"); void m.offsetWidth; m.classList.add("swap"); }
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+}
+document.querySelectorAll("[data-lang]").forEach(function (b) {
+  b.addEventListener("click", function () { setLang(b.getAttribute("data-lang"), true); });
+});
+window.addEventListener("resize", movePill);
+
+/* ---------- typed roles ---------- */
+var roleIndex = 0;
+var typer = (function () {
+  var el = document.getElementById("typed"), timer = null;
+  function run() {
+    var roles = t("roles"), word = roles[roleIndex % roles.length], n = el.textContent.length, phase = "type";
+    el.textContent = "";
+    if (reduced) { el.textContent = roles[0]; return; }
+    (function step() {
+      if (phase === "type") {
+        n = el.textContent.length;
+        if (n < word.length) { el.textContent = word.slice(0, n + 1); timer = setTimeout(step, 55); }
+        else { phase = "hold"; timer = setTimeout(step, 1800); }
+      } else if (phase === "hold") { phase = "erase"; step(); }
+      else {
+        n = el.textContent.length;
+        if (n > 0) { el.textContent = word.slice(0, n - 1); timer = setTimeout(step, 28); }
+        else { roleIndex++; word = roles[roleIndex % roles.length]; phase = "type"; timer = setTimeout(step, 250); }
+      }
+    })();
+  }
+  return { restart: function () { clearTimeout(timer); run(); } };
+})();
+
+/* ---------- init language ---------- */
+(function initLang() {
+  var saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  var nav = (navigator.language || "").toLowerCase();
+  var lang = saved || (nav === "pt-pt" ? "pt-PT" : nav.indexOf("pt") === 0 ? "pt-BR" : nav ? "en" : "pt-BR");
+  setLang(lang, false);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(movePill);
+})();
+
+/* ---------- copy email ---------- */
+document.querySelectorAll("[data-email]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var email = btn.getAttribute("data-email"), label = btn.innerHTML;
+    function done(msg) { btn.textContent = msg; setTimeout(function () { btn.innerHTML = label; }, 1800); }
+    function fallback() {
+      var el = document.getElementById("email-text"), r = document.createRange(); r.selectNodeContents(el);
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r); done(t("selected"));
+    }
+    try { navigator.clipboard.writeText(email).then(function () { done(t("copied")); }, fallback); } catch (e) { fallback(); }
+  });
+});
+
+/* ---------- scroll progress + active nav ---------- */
+var prog = document.getElementById("progress");
+var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav ul a"));
+function onScroll() {
+  var h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.transform = "scaleX(" + (h > 0 ? scrollY / h : 0) + ")";
+  var y = scrollY + innerHeight * 0.35, on = null;
+  navLinks.forEach(function (a) { var s = document.querySelector(a.getAttribute("href")); if (s && s.offsetTop <= y) on = a; });
+  navLinks.forEach(function (a) { a.classList.toggle("on", a === on); });
+}
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+/* ---------- reveal on scroll (only for things below the fold) ---------- */
+function scramble(el) {
+  if (reduced || el.children.length) return;
+  var final = el.textContent, chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/{}=+*#", f = 0, total = 22;
+  (function tick() {
+    el.textContent = final.split("").map(function (ch, i) {
+      if (ch === " ") return " ";
+      return i < (f / total) * final.length ? ch : chars[(Math.random() * chars.length) | 0];
+    }).join("");
+    if (f++ < total) requestAnimationFrame(tick); else el.textContent = final;
+  })();
+}
+function countUp(el) {
+  var to = +el.getAttribute("data-count"), t0 = performance.now(), d = 1400;
+  if (reduced) return;
+  (function tick(now) {
+    var p = Math.min(1, (now - t0) / d), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(to * e);
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+if ("IntersectionObserver" in window && !reduced) {
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target; el.classList.remove("pre"); io.unobserve(el);
+      el.querySelectorAll("[data-count]").forEach(countUp);
+      el.querySelectorAll("[data-scramble]").forEach(scramble);
+      el.querySelectorAll(".tree").forEach(function (tr) { tr.classList.add("typing"); });
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  document.querySelectorAll(".rv").forEach(function (el) {
+    if (el.getBoundingClientRect().top > innerHeight * 0.92) { el.classList.add("pre"); io.observe(el); }
+  });
+}
+
+/* ---------- tilt (hero portrait + project frames) ---------- */
+function tilt(el, max, glareTarget) {
+  if (!fine || reduced) return;
+  el.addEventListener("pointermove", function (e) {
+    var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    el.classList.add("live");
+    el.style.setProperty("--ry", ((x - 0.5) * max * 2).toFixed(2) + "deg");
+    el.style.setProperty("--rx", ((0.5 - y) * max * 2).toFixed(2) + "deg");
+    (glareTarget || el).style.setProperty("--gx", (x * 100).toFixed(1) + "%");
+    (glareTarget || el).style.setProperty("--gy", (y * 100).toFixed(1) + "%");
+  });
+  el.addEventListener("pointerleave", function () {
+    el.classList.remove("live");
+    el.style.setProperty("--ry", "0deg"); el.style.setProperty("--rx", "0deg");
+  });
+}
+var card = document.getElementById("card3d");
+tilt(card, 9);
+document.querySelectorAll(".frame.tilt").forEach(function (f) { tilt(f, 5); });
+
+/* ---------- screenshot auto-scroll inside frames ---------- */
+function measureScreens() {
+  document.querySelectorAll(".screen").forEach(function (s) {
+    var img = s.querySelector("img"), frame = s.closest(".frame");
+    function set() {
+      var shift = Math.max(0, img.getBoundingClientRect().height - s.getBoundingClientRect().height);
+      frame.style.setProperty("--shift", -shift + "px");
+      frame.style.setProperty("--dur", Math.max(2.5, shift / 260).toFixed(1) + "s");
+    }
+    if (img.complete) set(); else img.addEventListener("load", set);
+  });
+}
+measureScreens(); addEventListener("resize", measureScreens);
+if (!fine && !reduced && "IntersectionObserver" in window) {
+  var autoIO = new IntersectionObserver(function (en) {
+    en.forEach(function (e) { e.target.classList.toggle("auto", e.intersectionRatio > 0.6); });
+  }, { threshold: [0, 0.6] });
+  document.querySelectorAll("a.frame").forEach(function (f) { autoIO.observe(f); });
+}
+
+/* ---------- magnetic buttons ---------- */
+if (fine && !reduced) {
+  document.querySelectorAll(".mag").forEach(function (b) {
+    b.addEventListener("pointermove", function (e) {
+      var r = b.getBoundingClientRect();
+      b.style.transform = "translate(" + ((e.clientX - r.left - r.width / 2) * 0.22).toFixed(1) + "px," + ((e.clientY - r.top - r.height / 2) * 0.32).toFixed(1) + "px)";
+    });
+    b.addEventListener("pointerleave", function () { b.style.transition = "transform .45s cubic-bezier(.2,.7,.2,1)"; b.style.transform = ""; setTimeout(function () { b.style.transition = ""; }, 450); });
+  });
+}
+
+/* ---------- spotlight cards ---------- */
+document.querySelectorAll(".spot").forEach(function (c) {
+  c.addEventListener("pointermove", function (e) {
+    var r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", (e.clientX - r.left) + "px"); c.style.setProperty("--my", (e.clientY - r.top) + "px");
+  });
+  c.addEventListener("pointerleave", function () { c.style.setProperty("--mx", "-999px"); c.style.setProperty("--my", "-999px"); });
+});
+
+/* ---------- custom cursor ---------- */
+if (fine && !reduced) {
+  document.documentElement.classList.add("has-cursor");
+  var dot = document.querySelector(".cur-dot"), ring = document.querySelector(".cur-ring");
+  var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+  addEventListener("pointermove", function (e) { mx = e.clientX; my = e.clientY; dot.style.transform = "translate(" + mx + "px," + my + "px)"; }, { passive: true });
+  (function loop() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = "translate(" + rx + "px," + ry + "px)"; requestAnimationFrame(loop); })();
+  document.addEventListener("pointerover", function (e) {
+    var big = e.target.closest("[data-cursor]"), link = e.target.closest("a, button");
+    ring.classList.toggle("big", !!big); ring.classList.toggle("link", !big && !!link);
+  });
+  document.addEventListener("pointerleave", function () { dot.style.opacity = ring.style.opacity = "0"; });
+  document.addEventListener("pointerenter", function () { dot.style.opacity = ring.style.opacity = "1"; });
+}
+
+/* ---------- 3D orbit of tech chips around the portrait ---------- */
+(function orbit() {
+  var wrap = document.getElementById("portrait"), chips = Array.prototype.slice.call(document.querySelectorAll("#orbit .chip"));
+  var a0 = 0, last = performance.now(), visible = true, hoverBoost = 1, tiltX = 0, tiltY = 0;
+  function place() {
+    var w = wrap.clientWidth, h = wrap.clientHeight, R = w * 0.66, ry = h * 0.16;
+    chips.forEach(function (c, i) {
+      var a = a0 + (i / chips.length) * Math.PI * 2, s = Math.sin(a), co = Math.cos(a);
+      var depth = (s + 1) / 2; // 0 back, 1 front
+      var x = co * R + tiltY * 12 * depth, y = s * ry + (i % 2 ? -h * 0.18 : h * 0.12) + tiltX * 10 * depth;
+      var sc = 0.78 + depth * 0.32;
+      c.style.transform = "translate(-50%,-50%) translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) scale(" + sc.toFixed(3) + ")";
+      c.style.opacity = (0.35 + depth * 0.65).toFixed(2);
+      c.style.zIndex = depth > 0.5 ? 5 : 0;
+      c.classList.toggle("back", depth <= 0.5);
+      c.style.filter = depth > 0.5 ? "none" : "blur(" + ((0.5 - depth) * 3).toFixed(1) + "px)";
+    });
+  }
+  place();
+  if (reduced) return;
+  new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(wrap);
+  wrap.addEventListener("pointerenter", function () { hoverBoost = 3.2; });
+  wrap.addEventListener("pointerleave", function () { hoverBoost = 1; tiltX = tiltY = 0; });
+  wrap.addEventListener("pointermove", function (e) { var r = wrap.getBoundingClientRect(); tiltY = (e.clientX - r.left) / r.width - 0.5; tiltX = (e.clientY - r.top) / r.height - 0.5; });
+  var speed = 1;
+  (function loop(now) {
+    var dt = Math.min(50, now - last); last = now;
+    speed += (hoverBoost - speed) * 0.05;
+    if (visible) { a0 += dt * 0.00032 * speed; place(); }
+    requestAnimationFrame(loop);
+  })(last);
+  addEventListener("resize", place);
+})();
+
+/* ---------- node network behind the hero ---------- */
+(function net() {
+  var cv = document.getElementById("net"), ctx = cv.getContext("2d"), host = cv.parentElement;
+  var pts = [], W = 0, H = 0, dpr = Math.min(2, devicePixelRatio || 1), mouse = { x: -9999, y: -9999 }, visible = true, color = "#0b6e8a";
+  function readColor() { color = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || color; }
+  function resize() {
+    W = host.clientWidth; H = host.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = Math.round(Math.min(90, (W * H) / 15000)); pts = [];
+    for (var i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25 });
+    readColor(); draw();
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var dxm = p.x - mouse.x, dym = p.y - mouse.y, dm = Math.sqrt(dxm * dxm + dym * dym);
+      for (var j = i + 1; j < pts.length; j++) {
+        var q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = dx * dx + dy * dy;
+        if (d < 16000) { ctx.globalAlpha = (1 - d / 16000) * 0.28; ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+      }
+      if (dm < 170) { ctx.globalAlpha = (1 - dm / 170) * 0.7; ctx.strokeStyle = color; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+      ctx.globalAlpha = 0.55; ctx.fillStyle = color; ctx.beginPath(); ctx.arc(p.x, p.y, dm < 170 ? 2.6 : 1.6, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function step() {
+    pts.forEach(function (p) {
+      var dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 120 && d > 0.1) { p.vx += (dx / d) * 0.06; p.vy += (dy / d) * 0.06; }
+      p.vx *= 0.985; p.vy *= 0.985;
+      var sp = Math.sqrt(p.vx * p.vx + p.vy * p.vy); if (sp < 0.12) { p.vx *= 1.04; p.vy *= 1.04; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+  }
+  resize(); addEventListener("resize", resize);
+  if (window.matchMedia) { var mq = matchMedia("(prefers-color-scheme: dark)"); mq.addEventListener && mq.addEventListener("change", function () { readColor(); draw(); }); }
+  new MutationObserver(function () { readColor(); draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (reduced) return;
+  host.addEventListener("pointermove", function (e) { var r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+  host.addEventListener("pointerleave", function () { mouse.x = mouse.y = -9999; });
+  new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(host);
+  (function loop() { if (visible) { step(); draw(); } requestAnimationFrame(loop); })();
+})();
+
+/* ---------- WhatsApp bubble says hello once ---------- */
+setTimeout(function () { var w = document.getElementById("wa-float"); w.classList.add("hello"); setTimeout(function () { w.classList.remove("hello"); }, 4200); }, 3500);
+</script>
+
+</body>
+</html>
